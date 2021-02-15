@@ -33,6 +33,11 @@ package List_Arith is
         Pre  => Length (A) <= Max_Length,
         Post => Sum_List'Result = Sum (A);
 
+      procedure Init_List (A : in out Data)
+      with
+        Pre  => Length (A) <= Max_Length,
+        Post => Sum (A) = 0;
+
    end Lists;
 
 end List_Arith;

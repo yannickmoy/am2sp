@@ -50,6 +50,20 @@ package Int_Arith is
       with
         Post => Sum_SPARK'Result = Sum (A);
 
+      --  La version procédurale de Sum_SPARK permet de montrer les
+      --  conditions-cadre pour le sous-programme et la boucle, qui
+      --  spécifient que le champ D n'est pas modifié.
+
+      type Data_Sum (Length : Index) is record
+         D : Data (1 .. Length);
+         S : Natural;
+      end record;
+
+      procedure Sum_SPARK (A : in out Data_Sum)
+      with
+        Post => A.S = Sum (A.D)
+          and then A.D = A.D'Old;
+
    end SPARK;
 
    --  Ceci est une version du même algorithme où les valeurs du tableau
@@ -112,5 +126,34 @@ package Int_Arith is
         Post => Sum_Modular'Result = Sum (A);
 
    end Modular;
+
+   --  La procédure Init_SPARK accepte une variable potentiellement non
+   --  initialisée, ce qui requiert de spécifier son initialisation dans
+   --  l'invariant de boucle et la postcondition.
+
+   package Init is
+
+      subtype Index is Integer range 0 .. 1_000_000;
+      Max_Value : constant := 1_000;
+      subtype Value is Integer range 0 .. Max_Value;
+
+      type Data is array (Index range <>) of Value with
+        Relaxed_Initialization;
+
+      function Sum (A : Data; Up_To : Index) return Integer is
+         (if Up_To = 0 then 0 else A(Up_To) + Sum (A, Up_To - 1))
+      with
+        Pre  => A'First = 1
+          and then Up_To <= A'Last
+          and then (for all J in 1 .. Up_To => A(J)'Initialized),
+        Post => Sum'Result <= Up_To * Max_Value,
+        Subprogram_Variant => (Decreases => Up_To);
+
+      procedure Init_SPARK (A : in out Data; S : Positive)
+      with
+        Pre  => A'First = 1 and then S <= A'Length,
+        Post => Sum (A, S) = S
+          and then (for all J in 1 .. S => A(J)'Initialized);
+   end Init;
 
 end Int_Arith;

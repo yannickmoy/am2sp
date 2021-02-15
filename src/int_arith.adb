@@ -23,6 +23,16 @@ package body Int_Arith is
          end loop;
          return S;
       end Sum_SPARK;
+
+      procedure Sum_SPARK (A : in out Data_Sum) is
+      begin
+         A.S := 0;
+         for I in A.D'Range loop
+            A.S := A.S + A.D(I);
+            pragma Loop_Invariant (A.S = Sum (A.D, I));
+            pragma Loop_Invariant (A.D = A.D'Loop_Entry);
+         end loop;
+      end Sum_SPARK;
    end SPARK;
 
    package body Bignum is
@@ -65,5 +75,32 @@ package body Int_Arith is
          return S;
       end Sum_Modular;
    end Modular;
+
+   package body Init is
+      procedure Lemma_Sum_Ones (A : Data; I : Index)
+      with
+        Ghost,
+        Pre  => A'First = 1
+          and then I in A'Range
+          and then (for all J in 1 .. I => A(J)'Initialized)
+          and then (for all J in 1 .. I => A(J) = 1),
+        Post => Sum (A, Up_To => I) = I
+      is
+      begin
+         for J in 1 .. I loop
+            pragma Loop_Invariant (Sum (A, J) = J);
+         end loop;
+      end Lemma_Sum_Ones;
+
+      procedure Init_SPARK (A : in out Data; S : Positive) is
+      begin
+         for I in 1 .. S loop
+            A(I) := 1;
+            pragma Loop_Invariant (for all J in 1 .. I => A(J)'Initialized);
+            pragma Loop_Invariant (for all J in 1 .. I => A(J) = 1);
+         end loop;
+         Lemma_Sum_Ones (A, S);
+      end Init_SPARK;
+   end Init;
 
 end Int_Arith;
