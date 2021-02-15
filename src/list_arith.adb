@@ -28,10 +28,11 @@ package body List_Arith is
             P.Val := 0;
             P := P.Next;
             C := C + 1;
-            pragma Loop_Invariant (C <= Max_Length);
-            pragma Loop_Invariant (Length (P) <= Max_Length);
-            pragma Loop_Invariant (Length (At_End (P)) = Length (At_End (A)) + C);
-            pragma Loop_Invariant (Sum (At_End (P)) = Sum (At_End (A)));
+            pragma Loop_Invariant (C = Length (P)'Loop_Entry - Length (P));
+            pragma Loop_Invariant (if Length (At_End (P)) <= Max_Length - C then
+                                      Length (At_End (P)) + C = Length (At_End (A)));
+            pragma Loop_Invariant (if Length (At_End (P)) <= Max_Length - C then
+                                      Sum (At_End (P)) = Sum (At_End (A)));
          end loop;
       end Init_List;
    end Lists;
