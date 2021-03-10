@@ -16,9 +16,7 @@ is
    end record;
 
    function Length (A : access constant Cell) return Natural is
-     (if A = null then 0 else 1 + Natural'Min (2**31 - 2, Length (A.Next)))
-   with
-     Annotate => (GNATprove, Terminating);
+     (if A = null then 0 else 1 + Natural'Min (2**31 - 2, Length (A.Next)));
 
    function Sum (A : access constant Cell) return Natural is
      (if A = null then 0 else A.Val + Sum (A.Next))
