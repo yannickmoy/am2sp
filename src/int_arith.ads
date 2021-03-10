@@ -3,25 +3,6 @@ use  Ada.Numerics.Big_Numbers.Big_Integers;
 
 package Int_Arith is
 
-   --  Ceci est la traduction immédiate de l'algorithme de Floyd pour sommer
-   --  les éléments d'un tableau utilisé dans l'article « Assigning Meaning
-   --  to Programs ».
-
-   --  L'absence de bornes sur les indexes et les valeurs du tableau rend
-   --  improuvables les vérifications de respect des bornes de valeurs dans
-   --  le corps de la fonction.
-
-   package Floyd is
-
-      subtype Index is Integer;
-      subtype Value is Integer;
-      type Data is array (Index range <>) of Value with
-        Predicate => Data'First = 1 and Data'Last >= 0;
-
-      function Sum_Floyd (A : Data; N : Index) return Integer;
-
-   end Floyd;
-
    --  Ceci est une version plus idiomatique en SPARK du même algorithme,
    --  où nous avons ajouté des bornes pour les indexes et les valeurs du
    --  tableau.
@@ -29,8 +10,9 @@ package Int_Arith is
    --  La fonction récursive Sum est utilisée pour définir la spécification
    --  de la fonction Sum_SPARK.
 
-   package SPARK is
-
+   package SPARK
+     with Annotate => (GNATprove, Terminating)
+   is
       subtype Index is Integer range 0 .. 1_000_000;
       Max_Value : constant := 1_000;
       subtype Value is Integer range 0 .. Max_Value;
@@ -71,8 +53,9 @@ package Int_Arith is
    --  fonction Sum_Bignum qui spécifie que la somme des éléments du
    --  tableau ne doit pas pas dépasser la capacité des entiers.
 
-   package Bignum is
-
+   package Bignum
+     with Annotate => (GNATprove, Terminating)
+   is
       subtype Index is Integer range 0 .. 1_000_000;
       Max_Value : constant := Integer'Last;
       subtype Value is Integer range 0 .. Max_Value;
@@ -104,8 +87,9 @@ package Int_Arith is
    --  modulaire. Il n'est pas nécessaire de borner les valeurs dans cette
    --  version, puisqu'il n'y a pas de débordement de capacité possible.
 
-   package Modular is
-
+   package Modular
+     with Annotate => (GNATprove, Terminating)
+   is
       type Unsigned is mod 2**32;
 
       subtype Index is Integer range 0 .. 1_000_000;
@@ -131,8 +115,9 @@ package Int_Arith is
    --  initialisée, ce qui requiert de spécifier son initialisation dans
    --  l'invariant de boucle et la postcondition.
 
-   package Init is
-
+   package Init
+     with Annotate => (GNATprove, Terminating)
+   is
       subtype Index is Integer range 0 .. 1_000_000;
       Max_Value : constant := 1_000;
       subtype Value is Integer range 0 .. Max_Value;

@@ -10,6 +10,7 @@ package body List_Arith is
             P := P.Next;
             pragma Loop_Invariant (S + Sum (P) = Sum (A));
             pragma Loop_Invariant (Length (P) <= Max_Length);
+            pragma Loop_Variant (Decreases => Length (P));
          end loop;
          return S;
       end Sum_List;
@@ -33,6 +34,7 @@ package body List_Arith is
                                       Length (At_End (P)) + C = Length (At_End (A)));
             pragma Loop_Invariant (if Length (At_End (P)) <= Max_Length - C then
                                       Sum (At_End (P)) = Sum (At_End (A)));
+            pragma Loop_Variant (Decreases => Length (P));
          end loop;
       end Init_List;
    end Lists;

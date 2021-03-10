@@ -61,4 +61,60 @@ package body Real_Arith is
       end Lemma_Sum_Upper_Bound;
    end Floating;
 
+   package body Bignum is
+
+      procedure Lemma_Bump_Small_Integral_Float (I : Natural)
+      with
+        Ghost,
+        Pre  => I < 2**24,
+        Post => Float (I) + 1.0 = Float (I + 1)
+      is
+      begin
+         null;
+      end Lemma_Bump_Small_Integral_Float;
+
+      procedure Lemma_Bump_Small_Integral_Bigreal (I : Natural)
+      with
+        Ghost,
+        Pre  => I < 2**24,
+        Post => To_Bigreal (Float (I)) + To_Bigreal (1.0) =
+                To_Bigreal (Float (I + 1))
+      is
+      begin
+         null;
+      end Lemma_Bump_Small_Integral_Bigreal;
+
+      procedure Lemma_Add_Increment (S : Float; Incr : Value)
+      with
+        Ghost,
+        Pre  => S in 0.0..Float(Index'Last),
+        Post => abs (To_Bigreal (S + Incr)
+                     - To_Bigreal (S) - To_Bigreal (Incr))
+                <= Epsilon
+      is
+      begin
+         null;
+      end Lemma_Add_Increment;
+
+      function Sum_Bignum (A : Data) return Float is
+         S : Float range 0.0 .. Float'Last := 0.0;
+      begin
+         for I in A'Range loop
+            Lemma_Add_Increment (S, A(I));
+            S := S + A(I);
+            Lemma_Bump_Small_Integral_Float (I-1);
+            Lemma_Bump_Small_Integral_Bigreal (I-1);
+            pragma Assert (To_Bigreal (Float (I)) * Epsilon =
+              (To_Bigreal (Float (I-1)) + To_Bigreal (1.0)) * Epsilon);
+            pragma Assert (To_Bigreal (Float (I)) * Epsilon =
+              To_Bigreal (Float (I-1)) * Epsilon + Epsilon);
+            pragma Loop_Invariant (S <= Float (I));
+            pragma Loop_Invariant (abs (To_Bigreal (S) - Sum (A, I)) <=
+                                     To_Bigreal (Float (I)) * Epsilon);
+         end loop;
+         return S;
+      end Sum_Bignum;
+
+   end Bignum;
+
 end Real_Arith;

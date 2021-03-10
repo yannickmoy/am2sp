@@ -1,2 +1,2 @@
 pragma SPARK_Mode (On);
-pragma Ada_2020;
+pragma Ada_2022;

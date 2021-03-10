@@ -1,18 +1,5 @@
 package body Int_Arith is
 
-   package body Floyd is
-      function Sum_Floyd (A : Data; N : Index) return Integer is
-         I : Index := 1;
-         S : Value := 0;
-      begin
-         while I <= N loop
-            S := S + A(I);
-            I := I + 1;
-         end loop;
-         return S;
-      end Sum_Floyd;
-   end Floyd;
-
    package body SPARK is
       function Sum_SPARK (A : Data) return Integer is
          S : Integer := 0;

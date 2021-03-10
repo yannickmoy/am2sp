@@ -3,8 +3,9 @@ package List_Arith is
    --  Ceci est une version du même algorithme que Int_Arith.SPARK, où nous
    --  avons remplacé le tableau par une liste chaînée.
 
-   package Lists is
-
+   package Lists
+     with Annotate => (GNATprove, Terminating)
+   is
       Max_Length : constant := 1_000_000;
       Max_Value  : constant := 1_000;
       subtype Value is Integer range 0 .. Max_Value;
