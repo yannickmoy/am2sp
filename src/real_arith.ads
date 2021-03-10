@@ -70,7 +70,7 @@ package Real_Arith is
    package Bignum
      with Annotate => (GNATprove, Terminating)
    is
-      subtype Index is Integer range 0 .. 1_000_000;
+      subtype Index is Integer range 0 .. 1_000;
       Max_Value : constant := 1.0;
       subtype Value is Float range 0.0 .. Max_Value;
       type Data is array (Index range <>) of Value
@@ -93,7 +93,7 @@ package Real_Arith is
 
       function Sum (A : Data) return Bigreal is (Sum (A, Up_To => A'Last));
 
-      Epsilon : constant Bigreal := To_Bigreal (0.1);
+      Epsilon : constant Bigreal := To_Bigreal (0.0001);
 
       function Sum_Bignum (A : Data) return Float
       with
