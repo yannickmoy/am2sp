@@ -6,10 +6,9 @@ de l'algorithme de sommation des éléments d'un tableau présenté dans l'artic
 de Robert W. Floyd de 1967 « Assigning Meaning to Programs ».
 
 Tous les exemples sont prouvés avec la version courante de l'outil de preuve
-GNATprove, en dehors de la version `Int_Arith.Floyd.Sum_Floyd` pour laquelle
-l'absence de bornes sur les indexes et les valeurs du tableau rend improuvables
-les vérifications de respect des bornes de valeurs dans le corps de la
-fonction.
+GNATprove, en dehors de la version `Floyd.Sum_Floyd` pour laquelle l'absence de
+bornes sur les indexes et les valeurs du tableau rend improuvables les
+vérifications de respect des bornes de valeurs dans le corps de la fonction.
 
 Des adaptations sont nécessaires pour utiliser la version Community 2020
 (téléchargeable [ici](https://www.adacore.com/download)) qui ne reconnaît pas
