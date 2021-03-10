@@ -1,6 +1,7 @@
 package body Int_Arith is
 
    package body SPARK is
+
       function Sum_SPARK (A : Data) return Integer is
          S : Integer := 0;
       begin
@@ -20,6 +21,7 @@ package body Int_Arith is
             pragma Loop_Invariant (A.D = A.D'Loop_Entry);
          end loop;
       end Sum_SPARK;
+
    end SPARK;
 
    package body Bignum is
@@ -49,9 +51,11 @@ package body Int_Arith is
          end loop;
          return S;
       end Sum_Bignum;
+
    end Bignum;
 
    package body Modular is
+
       function Sum_Modular (A : Data) return Unsigned is
          S : Unsigned := 0;
       begin
@@ -61,9 +65,11 @@ package body Int_Arith is
          end loop;
          return S;
       end Sum_Modular;
+
    end Modular;
 
    package body Init is
+
       procedure Lemma_Sum_Ones (A : Data; I : Index)
       with
         Ghost,
@@ -88,6 +94,7 @@ package body Int_Arith is
          end loop;
          Lemma_Sum_Ones (A, S);
       end Init_SPARK;
+
    end Init;
 
 end Int_Arith;

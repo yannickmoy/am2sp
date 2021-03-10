@@ -16,11 +16,12 @@ package Int_Arith is
       subtype Index is Integer range 0 .. 1_000_000;
       Max_Value : constant := 1_000;
       subtype Value is Integer range 0 .. Max_Value;
-      type Data is array (Index range <>) of Value with
+      type Data is array (Index range <>) of Value
+      with
         Predicate => Data'First = 1 and Data'Last >= 0;
 
       function Sum (A : Data; Up_To : Index) return Integer is
-         (if Up_To = 0 then 0 else A(Up_To) + Sum (A, Up_To - 1))
+        (if Up_To = 0 then 0 else A(Up_To) + Sum (A, Up_To - 1))
       with
         Pre  => Up_To <= A'Last,
         Post => Sum'Result <= Up_To * Max_Value,
@@ -59,7 +60,8 @@ package Int_Arith is
       subtype Index is Integer range 0 .. 1_000_000;
       Max_Value : constant := Integer'Last;
       subtype Value is Integer range 0 .. Max_Value;
-      type Data is array (Index range <>) of Value with
+      type Data is array (Index range <>) of Value
+      with
         Predicate => Data'First = 1 and Data'Last >= 0;
 
       subtype Bigint is Big_Integer;
@@ -94,11 +96,12 @@ package Int_Arith is
 
       subtype Index is Integer range 0 .. 1_000_000;
       subtype Value is Unsigned;
-      type Data is array (Index range <>) of Value with
+      type Data is array (Index range <>) of Value
+      with
         Predicate => Data'First = 1 and Data'Last >= 0;
 
       function Sum (A : Data; Up_To : Index) return Unsigned is
-         (if Up_To = 0 then 0 else A(Up_To) + Sum (A, Up_To - 1))
+        (if Up_To = 0 then 0 else A(Up_To) + Sum (A, Up_To - 1))
       with
         Pre => Up_To <= A'Last,
         Subprogram_Variant => (Decreases => Up_To);
@@ -122,11 +125,12 @@ package Int_Arith is
       Max_Value : constant := 1_000;
       subtype Value is Integer range 0 .. Max_Value;
 
-      type Data is array (Index range <>) of Value with
+      type Data is array (Index range <>) of Value
+      with
         Relaxed_Initialization;
 
       function Sum (A : Data; Up_To : Index) return Integer is
-         (if Up_To = 0 then 0 else A(Up_To) + Sum (A, Up_To - 1))
+        (if Up_To = 0 then 0 else A(Up_To) + Sum (A, Up_To - 1))
       with
         Pre  => A'First = 1
           and then Up_To <= A'Last
@@ -139,6 +143,7 @@ package Int_Arith is
         Pre  => A'First = 1 and then S <= A'Length,
         Post => Sum (A, S) = S
           and then (for all J in 1 .. S => A(J)'Initialized);
+
    end Init;
 
 end Int_Arith;

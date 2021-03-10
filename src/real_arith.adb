@@ -1,6 +1,7 @@
 package body Real_Arith is
 
    package body Fixed is
+
       function Sum_Fixed (A : Data) return Fix is
          S : Fix := 0.0;
       begin
@@ -10,9 +11,11 @@ package body Real_Arith is
          end loop;
          return S;
       end Sum_Fixed;
+
    end Fixed;
 
    package body Floating is
+
       function Sum_Floating (A : Data) return Float is
          S : Float := 0.0;
       begin
@@ -59,6 +62,7 @@ package body Real_Arith is
             pragma Assert (Float (Up_To) = Float (Up_To - 1) + Float (1));
          end if;
       end Lemma_Sum_Upper_Bound;
+
    end Floating;
 
    package body Bignum is
