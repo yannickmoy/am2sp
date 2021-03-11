@@ -13,4 +13,9 @@ vérifications de respect des bornes de valeurs dans le corps de la fonction.
 Des adaptations sont nécessaires pour utiliser la version Community 2020
 (téléchargeable [ici](https://www.adacore.com/download)) qui ne reconnaît pas
 l'aspect `Subprogram_Variant` utilisé ici pour prouver la terminaison des
-fonctions récursives.
+fonctions récursives, et qui utilise une version précédente d'annotations pour
+spécifier les emprunts (`pledge`) de pointeurs, telle que présentée dans ce
+[billet de
+blog](https://blog.adacore.com/pointer-based-data-structures-in-spark).
+
+Ces adaptations sont disponibles dans la branche ``community_2020``.
