@@ -22,8 +22,7 @@ is
      (if A = null then 0 else A.Val + Sum (A.Next))
    with
      Pre  => Length (A) <= Max_Length,
-     Post => Sum'Result <= Length (A) * Max_Value,
-     Subprogram_Variant => (Decreases => Length (A));
+     Post => Sum'Result <= Length (A) * Max_Value;
 
    function Sum_List (A : Data) return Integer
    with

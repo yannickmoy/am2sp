@@ -24,8 +24,7 @@ package Int_Arith is
         (if Up_To = 0 then 0 else A(Up_To) + Sum (A, Up_To - 1))
       with
         Pre  => Up_To <= A'Last,
-        Post => Sum'Result <= Up_To * Max_Value,
-        Subprogram_Variant => (Decreases => Up_To);
+        Post => Sum'Result <= Up_To * Max_Value;
 
       function Sum (A : Data) return Integer is (Sum (A, Up_To => A'Last));
 
@@ -65,15 +64,14 @@ package Int_Arith is
         Predicate => Data'First = 1 and Data'Last >= 0;
 
       subtype Bigint is Big_Integer;
-      function To_Bigint (Arg : Integer) return Valid_Big_Integer
+      function To_Bigint (Arg : Integer) return Big_Integer
         renames To_Big_Integer;
 
       function Sum (A : Data; Up_To : Index) return Bigint is
         (if Up_To = 0 then To_Bigint (0)
          else To_Bigint (A(Up_To)) + Sum (A, Up_To - 1))
       with
-        Pre  => Up_To <= A'Last,
-        Subprogram_Variant => (Decreases => Up_To);
+        Pre  => Up_To <= A'Last;
 
       function Sum (A : Data) return Bigint is (Sum (A, Up_To => A'Last));
 
@@ -103,8 +101,7 @@ package Int_Arith is
       function Sum (A : Data; Up_To : Index) return Unsigned is
         (if Up_To = 0 then 0 else A(Up_To) + Sum (A, Up_To - 1))
       with
-        Pre => Up_To <= A'Last,
-        Subprogram_Variant => (Decreases => Up_To);
+        Pre => Up_To <= A'Last;
 
       function Sum (A : Data) return Unsigned is (Sum (A, Up_To => A'Last));
 
@@ -135,8 +132,7 @@ package Int_Arith is
         Pre  => A'First = 1
           and then Up_To <= A'Last
           and then (for all J in 1 .. Up_To => A(J)'Initialized),
-        Post => Sum'Result <= Up_To * Max_Value,
-        Subprogram_Variant => (Decreases => Up_To);
+        Post => Sum'Result <= Up_To * Max_Value;
 
       procedure Init_SPARK (A : in out Data; S : Positive)
       with

@@ -52,8 +52,7 @@ package body Real_Arith is
       with
         Ghost,
         Pre  => Up_To <= A'Last,
-        Post => Sum (A, Up_To) <= Float (Up_To) * Max_Value,
-        Subprogram_Variant => (Decreases => Up_To)
+        Post => Sum (A, Up_To) <= Float (Up_To) * Max_Value
       is
       begin
          if Up_To /= 0 then

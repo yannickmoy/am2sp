@@ -12,7 +12,10 @@ project AM2SP is
    end Builder;
 
    package Prove is
-      for Proof_Switches ("Ada") use ("--level=2", "-j0");
+      --  Do not issue warnings in the version for SPARK Community 2020,
+      --  as they are distracting (too many warnings coming from the use
+      --  of unannotated Big_Integer/Big_Real functions).
+      for Proof_Switches ("Ada") use ("--level=2", "-j0", "--warnings=off");
    end Prove;
 
 end AM2SP;

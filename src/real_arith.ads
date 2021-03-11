@@ -23,8 +23,7 @@ package Real_Arith is
         (if Up_To = 0 then 0.0 else A(Up_To) + Sum (A, Up_To - 1))
       with
         Pre  => Up_To <= A'Last,
-        Post => Sum'Result <= Up_To * Max_Value,
-        Subprogram_Variant => (Decreases => Up_To);
+        Post => Sum'Result <= Up_To * Max_Value;
 
       function Sum (A : Data) return Fix is (Sum (A, Up_To => A'Last));
 
@@ -52,8 +51,7 @@ package Real_Arith is
         (if Up_To = 0 then 0.0 else A(Up_To) + Sum (A, Up_To - 1))
       with
         Pre  => Up_To <= A'Last,
-        Post => Sum'Result <= Float (Up_To) * Max_Value,
-        Subprogram_Variant => (Decreases => Up_To);
+        Post => Sum'Result <= Float (Up_To) * Max_Value;
 
       function Sum (A : Data) return Float is (Sum (A, Up_To => A'Last));
 
@@ -79,7 +77,7 @@ package Real_Arith is
 
       subtype Bigreal is Big_Real;
       package Bigconv is new Float_Conversions (Float);
-      function To_Bigreal (Arg : Float) return Valid_Big_Real
+      function To_Bigreal (Arg : Float) return Big_Real
         renames Bigconv.To_Big_Real;
 
       function Sum (A : Data; Up_To : Index) return Bigreal is
@@ -88,8 +86,7 @@ package Real_Arith is
       with
         Pre  => Up_To <= A'Last,
         Post => Sum'Result <=
-          To_Bigreal (Float (Up_To)) * To_Bigreal (Max_Value),
-        Subprogram_Variant => (Decreases => Up_To);
+          To_Bigreal (Float (Up_To)) * To_Bigreal (Max_Value);
 
       function Sum (A : Data) return Bigreal is (Sum (A, Up_To => A'Last));
 
