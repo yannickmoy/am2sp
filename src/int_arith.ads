@@ -72,15 +72,14 @@ package Int_Arith is
         (if Up_To = 0 then To_Bigint (0)
          else To_Bigint (A(Up_To)) + Sum (A, Up_To - 1))
       with
-        Pre  => Up_To <= A'Last,
+        Pre => Up_To <= A'Last,
         Subprogram_Variant => (Decreases => Up_To);
 
       function Sum (A : Data) return Bigint is (Sum (A, Up_To => A'Last));
 
       function Sum_Bignum (A : Data) return Integer
       with
-        Pre  => Sum (A) >= To_Bigint (0)
-          and then Sum (A) <= To_Bigint (Integer'Last),
+        Pre  => Sum (A) <= To_Bigint (Integer'Last),
         Post => To_Bigint (Sum_Bignum'Result) = Sum (A);
 
    end Bignum;

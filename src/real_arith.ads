@@ -22,11 +22,14 @@ package Real_Arith is
       function Sum (A : Data; Up_To : Index) return Fix is
         (if Up_To = 0 then 0.0 else A(Up_To) + Sum (A, Up_To - 1))
       with
+        Ghost,
         Pre  => Up_To <= A'Last,
         Post => Sum'Result <= Up_To * Max_Value,
         Subprogram_Variant => (Decreases => Up_To);
 
-      function Sum (A : Data) return Fix is (Sum (A, Up_To => A'Last));
+      function Sum (A : Data) return Fix is (Sum (A, Up_To => A'Last))
+      with
+        Ghost;
 
       function Sum_Fixed (A : Data) return Fix
       with
@@ -51,11 +54,14 @@ package Real_Arith is
       function Sum (A : Data; Up_To : Index) return Float is
         (if Up_To = 0 then 0.0 else A(Up_To) + Sum (A, Up_To - 1))
       with
+        Ghost,
         Pre  => Up_To <= A'Last,
         Post => Sum'Result <= Float (Up_To) * Max_Value,
         Subprogram_Variant => (Decreases => Up_To);
 
-      function Sum (A : Data) return Float is (Sum (A, Up_To => A'Last));
+      function Sum (A : Data) return Float is (Sum (A, Up_To => A'Last))
+      with
+        Ghost;
 
       function Sum_Floating (A : Data) return Float
       with
@@ -86,12 +92,15 @@ package Real_Arith is
         (if Up_To = 0 then To_Bigreal (0.0)
          else To_Bigreal (A(Up_To)) + Sum (A, Up_To - 1))
       with
+        Ghost,
         Pre  => Up_To <= A'Last,
         Post => Sum'Result <=
           To_Bigreal (Float (Up_To)) * To_Bigreal (Max_Value),
         Subprogram_Variant => (Decreases => Up_To);
 
-      function Sum (A : Data) return Bigreal is (Sum (A, Up_To => A'Last));
+      function Sum (A : Data) return Bigreal is (Sum (A, Up_To => A'Last))
+      with
+        Ghost;
 
       Epsilon : constant Bigreal := To_Bigreal (0.0001);
 

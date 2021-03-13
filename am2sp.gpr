@@ -12,7 +12,7 @@ project AM2SP is
    end Builder;
 
    package Prove is
-      for Proof_Switches ("Ada") use ("--level=2", "-j0");
+      for Proof_Switches ("Ada") use ("--level=2", "-j0", "--counterexamples=on");
    end Prove;
 
 end AM2SP;

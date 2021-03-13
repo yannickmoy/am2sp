@@ -21,6 +21,7 @@ is
    function Sum (A : access constant Cell) return Natural is
      (if A = null then 0 else A.Val + Sum (A.Next))
    with
+     Ghost,
      Pre  => Length (A) <= Max_Length,
      Post => Sum'Result <= Length (A) * Max_Value,
      Subprogram_Variant => (Decreases => Length (A));
