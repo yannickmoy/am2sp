@@ -7,9 +7,8 @@ package body List_Arith is
       while P /= null loop
          S := S + P.Val;
          P := P.Next;
-         pragma Loop_Invariant (Length (P) <= Max_Length);
-         pragma Loop_Invariant (S + Sum (P) = Sum (A));
-         pragma Loop_Variant (Decreases => Length (P));
+         pragma Loop_Invariant (Length (P) <= To_Bigint (Max_Length));
+         pragma Loop_Invariant (To_Bigint (S) + Sum (P) = Sum (A));
       end loop;
       return S;
    end Sum_List;
@@ -28,12 +27,9 @@ package body List_Arith is
          P.Val := 0;
          P := P.Next;
          C := C + 1;
-         pragma Loop_Invariant (C + Length (P) = Length (P)'Loop_Entry);
-         pragma Loop_Invariant (if Length (At_End (P)) <= Max_Length - C then
-                                Length (At_End (A)) = Length (At_End (P)) + C);
-         pragma Loop_Invariant (if Length (At_End (P)) <= Max_Length - C then
-                                Sum (At_End (A)) = Sum (At_End (P)));
-         pragma Loop_Variant (Decreases => Length (P));
+         pragma Loop_Invariant (To_Bigint (C) + Length (P) = Length (P)'Loop_Entry);
+         pragma Loop_Invariant (Length (At_End (A)) = Length (At_End (P)) + To_Bigint (C));
+         pragma Loop_Invariant (Sum (At_End (A)) = Sum (At_End (P)));
       end loop;
    end Init_List;
 
