@@ -19,3 +19,12 @@ spécifier les emprunts (*pledge*) de pointeurs, telle que présentée dans ce
 blog](https://blog.adacore.com/pointer-based-data-structures-in-spark).
 
 Ces adaptations sont disponibles dans la branche `community_2020`.
+
+La branche `big_integer_list` contient une version du code avec pointeurs (dans
+`list_arith.ads` et `list_arith.adb`) où les fonctions `Length` et `Sum`
+retournent un entier non borné. Les invariants de boucle sont plus lisibles
+dans cette version car ils n'ont pas besoin de gardes pour garantir que `Sum`
+peut être appelé, `Sum` n'ayant pas besoin de précondition dans cette version.
+Par contre, cette version ne prouve pas la terminaison des fonctions récursives
+et des boucles `while`, car GNATprove n'accepte pas les valeurs de type non
+scalaire `Big_Integer` comme argument de variant.
