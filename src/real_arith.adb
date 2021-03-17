@@ -112,7 +112,6 @@ package body Real_Arith is
               (To_Bigreal (Float (I-1)) + To_Bigreal (1.0)) * Epsilon);
             pragma Assert (To_Bigreal (Float (I)) * Epsilon =
               To_Bigreal (Float (I-1)) * Epsilon + Epsilon);
-            pragma Loop_Invariant (S <= Float (I));
             pragma Loop_Invariant (abs (To_Bigreal (S) - Sum (A, I)) <=
                                      To_Bigreal (Float (I)) * Epsilon);
          end loop;
