@@ -10,9 +10,7 @@ package Floyd is
 
    subtype Index is Integer;
    subtype Value is Integer;
-   type Data is array (Index range <>) of Value
-   with
-     Predicate => Data'First = 1 and Data'Last >= 0;
+   type Data is array (Index range 1..<>) of Value;
 
    function Sum_Floyd (A : Data; N : Index) return Integer
    with

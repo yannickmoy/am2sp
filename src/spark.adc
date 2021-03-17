@@ -1,2 +1,3 @@
 pragma SPARK_Mode (On);
 pragma Ada_2022;
+pragma Extensions_Allowed (On);
