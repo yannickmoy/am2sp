@@ -16,7 +16,8 @@ package Int_Arith is
       subtype Index is Integer range 0 .. 1_000_000;
       Max_Value : constant := 1_000;
       subtype Value is Integer range 0 .. Max_Value;
-      type Data is array (Index range 1..<>) of Value;
+      type Data is array (Index range 1..<>) of Value
+        with Predicate => Data'Last >= 0;
 
       function Sum (A : Data; Up_To : Index) return Integer is
         (if Up_To = 0 then 0 else A(Up_To) + Sum (A, Up_To - 1))
@@ -58,7 +59,8 @@ package Int_Arith is
       subtype Index is Integer range 0 .. 1_000_000;
       Max_Value : constant := Integer'Last;
       subtype Value is Integer range 0 .. Max_Value;
-      type Data is array (Index range 1..<>) of Value;
+      type Data is array (Index range 1..<>) of Value
+        with Predicate => Data'Last >= 0;
 
       subtype Bigint is Big_Integer;
       function To_Bigint (Arg : Integer) return Valid_Big_Integer
@@ -91,7 +93,8 @@ package Int_Arith is
 
       subtype Index is Integer range 0 .. 1_000_000;
       subtype Value is Unsigned;
-      type Data is array (Index range 1..<>) of Value;
+      type Data is array (Index range 1..<>) of Value
+        with Predicate => Data'Last >= 0;
 
       function Sum (A : Data; Up_To : Index) return Unsigned is
         (if Up_To = 0 then 0 else A(Up_To) + Sum (A, Up_To - 1))

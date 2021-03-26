@@ -15,7 +15,8 @@ package Real_Arith is
       subtype Index is Integer range 0 .. 1_000_000;
       Max_Value : constant := 1.0;
       subtype Value is Fix range 0.0 .. Max_Value;
-      type Data is array (Index range 1..<>) of Value;
+      type Data is array (Index range 1..<>) of Value
+        with Predicate => Data'Last >= 0;
 
       function Sum (A : Data; Up_To : Index) return Fix is
         (if Up_To = 0 then 0.0 else A(Up_To) + Sum (A, Up_To - 1))
@@ -45,7 +46,8 @@ package Real_Arith is
       subtype Index is Integer range 0 .. 1_000_000;
       Max_Value : constant := 1.0;
       subtype Value is Float range 0.0 .. Max_Value;
-      type Data is array (Index range 1..<>) of Value;
+      type Data is array (Index range 1..<>) of Value
+        with Predicate => Data'Last >= 0;
 
       function Sum (A : Data; Up_To : Index) return Float is
         (if Up_To = 0 then 0.0 else A(Up_To) + Sum (A, Up_To - 1))
@@ -75,7 +77,8 @@ package Real_Arith is
       subtype Index is Integer range 0 .. 1_000;
       Max_Value : constant := 1.0;
       subtype Value is Float range 0.0 .. Max_Value;
-      type Data is array (Index range 1..<>) of Value;
+      type Data is array (Index range 1..<>) of Value
+        with Predicate => Data'Last >= 0;
 
       subtype Bigreal is Big_Real;
       package Bigconv is new Float_Conversions (Float);
